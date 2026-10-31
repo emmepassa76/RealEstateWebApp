@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="it" class="h-full bg-gray-900 text-gray-100 font-sans">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Social Video Generator Studio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f0f17;
+      --bg-subtle: #1a1a24;
+      --fg: #e8e8f0;
+      --muted: #71717a;
+      --accent: #c6ff00;
+      --accent-dim: rgba(198, 255, 0, 0.15);
+      --card: #16161f;
+      --border: #2a2a3a;
+      --success: #38bdf8;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      min-height: 100vh;
+    }
+
+    .bg-pattern {
+      background-image: 
+        radial-gradient(ellipse at 20% 20%, rgba(198, 255, 0, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(198, 255, 0, 0.05) 0%, transparent 50%);
+    }
+
+    .gradient-accent {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--fg) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .glass-card {
+      background: rgba(15, 15, 23, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #c6ff00 0%, #a3d500 100%);
+      color: #0a0a10;
+      font-weight: 600;
+      padding: 12px 24px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 20px rgba(198, 255, 0, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(198, 255, 0, 0.4);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .input-field {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--fg);
+      padding: 12px 16px;
+      border-radius: 8px;
+      width: 100%;
+      font-family: 'Inter', sans-serif;
+      transition: border-color 0.2s ease;
+    }
+
+    .input-field:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-dim);
+    }
+
+    .select-container {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      width: 100%;
+    }
+
+    .radio-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      background: var(--bg-subtle);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .radio-option:hover {
+      background: var(--border);
+    }
+
+    .radio-option input[type="radio"] {
+      accent-color: #c6ff00;
+    }
+
+    .gallery-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .gallery-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .gallery-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .checkbox-input {
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--muted);
+      border-radius: 4px;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .checkbox-input:checked {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .preview-audio {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .preview-audio:hover {
+      background: var(--border);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .text-gradient {
+      background: linear-gradient(135deg, #c6ff00 0%, #a3d500 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    @media (max-width: 640px) {
+      .grid-cols-2 {
+        grid-template-columns: 1fr !important;
+      }
+      .grid-cols-4 {
+        grid-template-columns: 1fr !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-full">
+  
+  <div class="bg-pattern min-h-full p-6">
+    
+    <!-- Intitolazione -->
+    <div class="border-b border-gray-800 pb-4 mb-6">
+      <h2 class="text-2xl font-bold tracking-wide text-indigo-400">Social Video Generator Studio</h2>
+      <p class="text-sm text-gray-400">Crea reel e video ottimizzati per Instagram e Facebook</p>
+    </div>
+
+    <!-- SCELTA FORMATO SOCIAL -->
+    <div class="space-y-2 mb-6">
+      <label class="font-semibold text-lg text-gray-200">Formato Video Finale</label>
+      <div class="grid grid-cols-2 gap-4">
+        <label class="flex items-center space-x-3 p-3 bg-gray-800 border border-indigo-500 rounded-lg cursor-pointer">
+          <input type="radio" name="videoFormat" value="9:16" checked class="accent-indigo-500">
+          <div>
+            <p class="font-medium text-sm">Verticale (9:16)</p>
+            <span class="text-xs text-gray-400">Ideale per Reel, TikTok e Storie</span>
+          </div>
+        </label>
+        <label class="flex items-center space-x-3 p-3 bg-gray-800 border border-gray-700 rounded-lg cursor-pointer">
+          <input type="radio" name="videoFormat" value="16:9" class="accent-indigo-500">
+          <div>
+            <p class="font-medium text-sm">Orizzontale (16:9)</p>
+            <span class="text-xs text-gray-400">Ideale per post classici o YouTube</span>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <!-- SEZIONE 1: Selezione Foto (Stile Galleria Smartphone) -->
+    <div class="space-y-3 mb-6">
+      <div class="flex justify-between items-center">
+        <label class="font-semibold text-lg text-gray-200">1. Seleziona Immagini dall'archivio</label>
+        <input type="file" id="folderInput" webkitdirectory directory multiple class="hidden" onchange="handleFolderSelect(event)">
+        <button onclick="document.getElementById('folderInput').click()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium rounded-lg transition">
+          📂 Carica Cartella Foto
+        </button>
+      </div>
+    
+      <!-- Griglia Galleria -->
+      <div id="imageGallery" class="grid grid-cols-2 sm:grid-cols-4 gap-4 p-4 bg-gray-950 rounded-lg min-h-[140px] max-h-64 overflow-y-auto border border-gray-800">
+        <span class="col-span-full text-center text-gray-500 self-center my-auto">Nessuna cartella selezionata. Clicca su "Carica Cartella Foto".</span>
+      </div>
+      <div class="text-xs text-right text-gray-400"><span id="selectedCount">0</span> immagini selezionate per il montaggio</div>
+    </div>
+
+    <!-- SEZIONE 2: Testo in Sovrimpressione (Hook per i social) -->
+    <div class="space-y-2 mb-6">
+      <label class="font-semibold text-lg text-gray-200">2. Testo in Sovrimpressione (es. Prezzo o Titolo ad effetto)</label>
+      <input type="text" id="videoOverlayText" placeholder="Es. 🏡 Splendido Trilocale in Centro! Info in DM" class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-indigo-500 text-white">
+    </div>
+
+    <!-- SEZIONE 3: Base Musicale con Preascolto -->
+    <div class="space-y-3 mb-6">
+      <label class="font-semibold text-lg text-gray-200">3. Scegli Base Musicale (Trend Free)</label>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <!-- Traccia 1 -->
+        <div class="p-3 bg-gray-800 border border-gray-700 rounded-lg flex items-center justify-between">
+          <div>
+            <p class="font-medium text-sm">Modern Ambient</p>
+            <span class="text-xs text-gray-400">Chill / Corporate</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <button onclick="previewAudio('track1.mp3')" class="preview-audio p-2">▶️</button>
+            <input type="radio" name="selectedTrack" value="track1.mp3" class="accent-indigo-500">
+          </div>
+        </div>
+        <!-- Traccia 2 -->
+        <div class="p-3 bg-gray-800 border border-gray-700 rounded-lg flex items-center justify-between">
+          <div>
+            <p class="font-medium text-sm">Upbeat Real Estate</p>
+            <span class="text-xs text-gray-400">Dinamico / Ritmato</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <button onclick="previewAudio('track2.mp3')" class="preview-audio p-2">▶️</button>
+            <input type="radio" name="selectedTrack" value="track2.mp3" class="accent-indigo-500">
+          </div>
+        </div>
+        <!-- Traccia 3 -->
+        <div class="p-3 bg-gray-800 border border-gray-700 rounded-lg flex items-center justify-between">
+          <div>
+            <p class="font-medium text-sm">Elegant Minimal</p>
+            <span class="text-xs text-gray-400">Lusso / Raffinato</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <button onclick="previewAudio('track3.mp3')" class="preview-audio p-2">▶️</button>
+            <input type="radio" name="selectedTrack" value="track3.mp3" class="accent-indigo-500">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEZIONE 4: Istruzioni e Prompt di Manipolazione -->
+    <div class="space-y-2 mb-6">
+      <label class="font-semibold text-lg text-gray-200">4. Descrizione Azioni e Manipolazioni IA</label>
+      <textarea id="aiPrompt" rows="3" placeholder="Es. Transizioni veloci a ritmo di musica, zoom in continuo sulle foto e stile cinematografico luminoso." class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-indigo-500 text-white resize-none"></textarea>
+    </div>
+
+    <!-- SEZIONE 5: Azione di Invio -->
+    <div class="pt-4 border-t border-gray-800 flex justify-end">
+      <button onclick="submitToAI()" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-lg shadow-lg transition flex items-center space-x-2">
+        <span>🚀 Genera Reel per Instagram/Facebook</span>
+      </button>
+    </div>
+
+  </div>
+
+</body>
+</html>
